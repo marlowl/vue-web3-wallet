@@ -2,6 +2,8 @@
 
 Basic ethereum wallet with vue, web3, and ganache-cli
 
+![](screenshot.gif)
+
 ## Build Setup
 
 
