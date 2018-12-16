@@ -5,13 +5,15 @@
         <p class="modal-card-title">Send Transaction</p>
       </header>
       <section class="modal-card-body">
+        <span class="select_address">To: </span>
+        <span>{{addressSend}}</span> 
+        <br/>
         <b-field>
           <b-dropdown v-model="addressSend" hoverable>
             <button class="button is-info" slot="trigger">
               <span>Select address</span>
               <b-icon icon="menu-down"></b-icon>
             </button>
-
             <b-dropdown-item v-for="item in accounts" :value="item" v-bind:key="item">{{item}}</b-dropdown-item>
           </b-dropdown>
         </b-field>
@@ -63,8 +65,14 @@ export default Vue.extend({
     reload() {
       setTimeout(function() {
         window.location.reload(true);
-      }, 2000);
+      }, 500);
     }
   }
 });
 </script>
+<style lang="scss">
+.select_address {
+  font-size: 16px;
+  font-weight: bold;
+}
+</style>

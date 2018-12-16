@@ -4,14 +4,14 @@
       <tr>
         <th>Address</th>
         <th>Balance</th>
-        <th>Send</th>
+        <th>Transaction</th>
       </tr>
       <tr v-bind:key="index" v-for="(item, index) in accounts">
         <td>{{item}}</td>
         <td>{{balance[index]}}</td>
         <td>
           <section>
-            <button class="button" @click="setModal(item)">Send Transaction</button>
+            <button class="button" @click="setModal(item)">Make Transaction</button>
 
             <b-modal :active.sync="isComponentModalActive" has-modal-card>
               <modal-form v-bind="formProps"></modal-form>
