@@ -14,7 +14,7 @@
             <button class="button" @click="setModal(item)">Make Transaction</button>
 
             <b-modal :active.sync="isComponentModalActive" has-modal-card>
-              <modal-form v-bind="formProps"></modal-form>
+              <modal-form :amount="amount" :fromAddress="fromAddress" :accounts="accounts"></modal-form>
             </b-modal>
           </section>
         </td>
@@ -28,55 +28,48 @@ import Vue from "vue";
 import Web3 from "web3";
 // @ts-ignore
 import ModalForm from "@/components/ModalForm";
-import { setInterval } from 'timers';
+import Component from "vue-class-component";
 
-export default Vue.extend({
+@Component({
   components: {
     ModalForm
-  },
-  data() {
-    return {
-      isComponentModalActive: false,
-      formProps: {
-        amount: null,
-        fromAddress: "",
-        accounts: []
-      },
-      accounts: [],
-      balance: []
-    };
-  },
-  methods: {
-    // @ts-ignore
-    setModal(item) {
-      this.formProps.fromAddress = item;
-      this.isComponentModalActive = true;
-    },
-    getAccountBalance() {
-      const web3 = new Web3(
-        new Web3.providers.HttpProvider("http://127.0.0.1:7545/")
-      );
-      const accounts = web3.eth.getAccounts((err, acc) => {
-        // @ts-ignore
-        this.accounts = acc;
-        // @ts-ignore
-        this.formProps.accounts = acc;
-        const balanceArray = this.balance;
-        for (let i = 0; i < acc.length; i++) {
-          const weiBalance = web3.eth.getBalance(acc[i]);
-          // @ts-ignore
-          balanceArray.push(
-            // @ts-ignore
-            web3.fromWei(weiBalance.toNumber(), "ether") + " ETH"
-          );
-        }
-      });
-    }
-  },
-  mounted() {
-    this.getAccountBalance();
   }
-});
+})
+export default class Home extends Vue {
+  isComponentModalActive: boolean = false;
+  amount: number = null;
+  fromAddress: string = ''
+  accounts: Array<{string}> = []
+  balance: Array<{number}> = []
+  
+
+  setModal(item) {
+    this.fromAddress = item;
+    this.isComponentModalActive = true;
+  }
+
+  getAccountBalance() {
+    const web3 = new Web3(
+      new Web3.providers.HttpProvider("http://127.0.0.1:7545/")
+    );
+    const accounts = web3.eth.getAccounts((err, acc) => {
+      // @ts-ignore
+      this.accounts = acc;
+      const balanceArray = this.balance;
+      for (let i = 0; i < acc.length; i++) {
+        const weiBalance = web3.eth.getBalance(acc[i]);
+        balanceArray.push(
+          // @ts-ignore
+          web3.fromWei(weiBalance.toNumber(), "ether") + " ETH"
+        );
+      }
+    });
+  }
+
+  mounted (){
+      this.getAccountBalance()
+  }
+}
 </script>
 
 <style>

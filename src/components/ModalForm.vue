@@ -5,9 +5,9 @@
         <p class="modal-card-title">Send Transaction</p>
       </header>
       <section class="modal-card-body">
-        <span class="select_address">To: </span>
-        <span>{{addressSend}}</span> 
-        <br/>
+        <span class="select_address">To:</span>
+        <span>{{addressSend}}</span>
+        <br>
         <b-field>
           <b-dropdown v-model="addressSend" hoverable>
             <button class="button is-info" slot="trigger">
@@ -40,36 +40,38 @@
   </form>
 </template>
 <script lang="ts">
-import Vue from "vue";
 import Web3 from "web3";
-export default Vue.extend({
-  props: ["amount", "fromAddress", "accounts"],
-  data() {
-    return {
-      addressSend: "",
-      amountSend: 1
-    };
-  },
-  methods: {
-    sendTransaction() {
-      let web3 = new Web3(
-        new Web3.providers.HttpProvider("http://127.0.0.1:7545/")
-      );
-      web3.eth.sendTransaction({
-        from: this.fromAddress,
-        to: this.addressSend,
-        // @ts-ignore
-        value: web3.toWei(this.amountSend, "ether")
-      });
-    },
-    reload() {
-      setTimeout(function() {
-        window.location.reload(true);
-      }, 500);
-    }
+import { Vue, Component, Prop } from "vue-property-decorator";
+@Component
+export default class ModalForm extends Vue {
+  @Prop() amount: number;
+  @Prop() fromAddress: string;
+  @Prop() accounts: string;
+  
+
+  addressSend: string = "";
+  amountSend: number = 1;
+
+  sendTransaction() {
+    let web3 = new Web3(
+      new Web3.providers.HttpProvider("http://127.0.0.1:7545/")
+    );
+    web3.eth.sendTransaction({
+      from: this.fromAddress,
+      to: this.addressSend,
+      // @ts-ignore
+      value: web3.toWei(this.amountSend, "ether")
+    });
   }
-});
+
+  reload() {
+    setTimeout(function() {
+      window.location.reload(true);
+    }, 500);
+  }
+}
 </script>
+
 <style lang="scss">
 .select_address {
   font-size: 16px;
