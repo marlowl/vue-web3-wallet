@@ -24,11 +24,11 @@
 </template>
 
 <script lang="ts">
-import Vue from 'vue';
+import Vue from "vue";
 import Web3 from "web3";
 // @ts-ignore
 import ModalForm from "@/components/ModalForm";
-
+import { setInterval } from 'timers';
 
 export default Vue.extend({
   components: {
@@ -47,35 +47,41 @@ export default Vue.extend({
     };
   },
   methods: {
-      // @ts-ignore
-      setModal(item){
-          this.formProps.fromAddress = item;
-          this.isComponentModalActive = true
-      }
+    // @ts-ignore
+    setModal(item) {
+      this.formProps.fromAddress = item;
+      this.isComponentModalActive = true;
+    },
+    getAccountBalance() {
+      const web3 = new Web3(
+        new Web3.providers.HttpProvider("http://127.0.0.1:7545/")
+      );
+      const accounts = web3.eth.getAccounts((err, acc) => {
+        // @ts-ignore
+        this.accounts = acc;
+        // @ts-ignore
+        this.formProps.accounts = acc;
+        const balanceArray = this.balance;
+        for (let i = 0; i < acc.length; i++) {
+          const weiBalance = web3.eth.getBalance(acc[i]);
+          // @ts-ignore
+          balanceArray.push(
+            // @ts-ignore
+            web3.fromWei(weiBalance.toNumber(), "ether") + " ETH"
+          );
+        }
+      });
+    }
   },
-  created() {
-    const web3 = new Web3(
-      new Web3.providers.HttpProvider("http://127.0.0.1:7545/")
-    );
-    const accounts = web3.eth.getAccounts((err, acc) => {
-        // @ts-ignore
-      this.accounts = acc;
-      // @ts-ignore
-      this.formProps.accounts = acc;
-      const balanceArray = this.balance;
-      for (let i = 0; i < acc.length; i++) {
-        const weiBalance = web3.eth.getBalance(acc[i]);
-        // @ts-ignore
-        balanceArray.push(web3.fromWei(weiBalance.toNumber(), "ether") + " ETH");
-      }
-    });
+  mounted() {
+    this.getAccountBalance();
   }
 });
 </script>
 
 <style>
-    .table {
-      margin-left: auto;
-      margin-right: auto;
-    }
+.table {
+  margin-left: auto;
+  margin-right: auto;
+}
 </style>

@@ -29,7 +29,10 @@
 
       <footer class="modal-card-foot">
         <button class="button" type="button" @click="$parent.close()">Close</button>
-        <button @click="handler" class="button is-primary">Send</button>
+        <button
+          @click="sendTransaction() + $parent.close() + reload()"
+          class="button is-primary"
+        >Send</button>
       </footer>
     </div>
   </form>
@@ -46,12 +49,7 @@ export default Vue.extend({
     };
   },
   methods: {
-    handler() {
-      this.doThis();
-      // @ts-ignore
-      this.$parent.close();
-    },
-    doThis() {
+    sendTransaction() {
       let web3 = new Web3(
         new Web3.providers.HttpProvider("http://127.0.0.1:7545/")
       );
@@ -61,6 +59,11 @@ export default Vue.extend({
         // @ts-ignore
         value: web3.toWei(this.amountSend, "ether")
       });
+    },
+    reload() {
+      setTimeout(function() {
+        window.location.reload(true);
+      }, 2000);
     }
   }
 });
