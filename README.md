@@ -1,6 +1,6 @@
-# vuethwallet
+# vue-eth-wallet
 
-Basic ethereum wallet with vue, web3, and ganache-cli
+Basic ethereum wallet with vue-cli, web3, and ganache-cli
 
 ![](screenshot.gif)
 
