@@ -57,7 +57,7 @@ export default Vue.extend({
     const web3 = new Web3(
       new Web3.providers.HttpProvider("http://127.0.0.1:7545/")
     );
-    const test = web3.eth.getAccounts((err, acc) => {
+    const accounts = web3.eth.getAccounts((err, acc) => {
         // @ts-ignore
       this.accounts = acc;
       // @ts-ignore
@@ -66,7 +66,7 @@ export default Vue.extend({
       for (let i = 0; i < acc.length; i++) {
         const weiBalance = web3.eth.getBalance(acc[i]);
         // @ts-ignore
-        balanceArray.push(weiBalance.c[0]);
+        balanceArray.push(web3.fromWei(weiBalance.toNumber(), "ether") + " ETH");
       }
     });
   }
