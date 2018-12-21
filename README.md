@@ -1,4 +1,4 @@
-# Basic web3 wallet build with vue and ganache
+# Demo
 ![](screenshot.gif)
 
 ## Build Setup
