@@ -1,7 +1,4 @@
-# vue-eth-wallet
-
-Basic web3 wallet with vue and ganache
-
+# Basic web3 wallet build with vue and ganache
 ![](screenshot.gif)
 
 ## Build Setup
@@ -9,8 +6,9 @@ Basic web3 wallet with vue and ganache
 
 
 ``` bash
-# start ganache-cli
+# install ganache-cli
 npm install ganache-cli
+# start ganache-cli
 ganache-cli -p 7545
 
 # install dependencies
