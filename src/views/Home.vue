@@ -24,11 +24,9 @@
 </template>
 
 <script lang="ts">
-import Vue from "vue";
+import { Vue, Component, Prop } from "vue-property-decorator";
 import Web3 from "web3";
-// @ts-ignore
-import ModalForm from "@/components/ModalForm";
-import Component from "vue-class-component";
+import ModalForm from "@/components/ModalForm.vue";
 
 @Component({
   components: {
@@ -38,10 +36,9 @@ import Component from "vue-class-component";
 export default class Home extends Vue {
   isComponentModalActive: boolean = false;
   amount: number = null;
-  fromAddress: string = ''
-  accounts: Array<{string}> = []
-  balance: Array<{number}> = []
-  
+  fromAddress: string = "";
+  accounts: string[] = [];
+  balance: string[] = [];
 
   setModal(item) {
     this.fromAddress = item;
@@ -53,21 +50,19 @@ export default class Home extends Vue {
       new Web3.providers.HttpProvider("http://127.0.0.1:7545/")
     );
     const accounts = web3.eth.getAccounts((err, acc) => {
-      // @ts-ignore
       this.accounts = acc;
       const balanceArray = this.balance;
       for (let i = 0; i < acc.length; i++) {
         const weiBalance = web3.eth.getBalance(acc[i]);
-        balanceArray.push(
-          // @ts-ignore
-          web3.fromWei(weiBalance.toNumber(), "ether") + " ETH"
-        );
+        // @ts-ignore
+        let convertToEth = web3.fromWei(weiBalance.toNumber(), "ether");
+        balanceArray.push(convertToEth + " ETH");
       }
     });
   }
 
-  mounted (){
-      this.getAccountBalance()
+  mounted() {
+    this.getAccountBalance();
   }
 }
 </script>
