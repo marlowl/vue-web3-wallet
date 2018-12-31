@@ -12,15 +12,24 @@ Send transactions between ganache-cli accounts
 
 ![](screenshot.gif)
 
-## Install and run ganache-cli
-1. `npm install -g ganache-cli`
-2.  Simply start ganache with `ganache-cli -p 7545`
+# Project setup
 
-## Install dependencies and run
-1. `npm install`
-2. `npm run serve`
+### Install ganache-cli
+```
+npm install -g  ganache-cli
+```
 
-## Technologies & Languages Used
-1. Vue (Typescript/Javascript)
-2. Ganache
-3. Web3
+### Start ganache-cli
+```
+ganache-cli -p 7545
+```
+
+### Install dependencies
+```
+npm install
+```
+
+### Start dev server
+```
+npm run serve
+```
